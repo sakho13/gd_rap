@@ -1,32 +1,59 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app style="background-color: #f5f5f5;">
+    <v-app-bar
+      app color="primary"
+    >
+
+      <v-app-bar-title> GD-Rap </v-app-bar-title>
+
+      <v-spacer />
+
+      <v-btn
+        text
+        @click="isAbout = !isAbout"
+      >
+        <span class="mr-2"> {{ isAbout ? "Top": "About"}} </span>
+        <v-icon> mdi-information-variant </v-icon>
+      </v-btn>
+    </v-app-bar>
+
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script lang="ts">
+import Vue from 'vue';
 
-#nav {
-  padding: 30px;
-}
+export default Vue.extend({
+  name: 'App',
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  data: () => ({
+    isAbout: false
+  }),
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+  computed: {
+    // appStyleObj: function() {
+    //   if (this.$vuetify.theme.dark) {
+    //     return {
+    //       'background-color': '#d4d4d4'
+    //     }
+    //   } else {
+    //     return {
+    //       'background-color': '#ffffff'
+    //     }
+    //   }
+    // }
+  },
+
+  watch: {
+    isAbout: function(_n, o) {
+      this.$router.push({name: o? "Top": "About"})
+    }
+  }
+});
+</script>
+
+<style scoped>
 </style>

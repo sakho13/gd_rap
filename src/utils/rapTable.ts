@@ -1,11 +1,25 @@
 
 export type ColumnType = {
   id: string
-  name: string
+  label: string
+  field: string
   isShow: boolean
 }
 
-export type DataRowCellType = number | string
+export type DataRowCellType = {
+  id: number
+  yyyymmdd?: string
+  yearOnly?: number
+  monthOnly?: number
+  dayOnly?: number
+  hhmmss?: string
+  hoursOnly?: number
+  minutesOnly?: number
+  secondsOnly?: number
+  miliSecondsOnly?: number
+  allSec?: number
+  allSecNoHours?: number
+}
 
 /**
  * ラップ格納用のテーブル
@@ -16,17 +30,18 @@ export class RapTable {
 
   constructor() {
     this.column = [
-      // { id: "no", name: "No", isShow: true },
-      { id: "yyyymmdd", name: "YYYY/MM/DD", isShow: true },
-      { id: "yearOnly", name: "YYYY", isShow: false }, // 年
-      { id: "monthOnly", name: "MM", isShow: false }, // 月
-      { id: "dayOnly", name: "DD", isShow: false }, // 日
-      { id: "hhmmss", name: "hh:mm:ss", isShow: true },
-      { id: "hoursOnly", name: "hh", isShow: false }, // 時
-      { id: "minutesOnly", name: "mm", isShow: false }, // 分
-      { id: "secondsOnly", name: "ss", isShow: false }, // 秒
-      { id: "allSec", name: "秒", isShow: true }, // 時間部分秒換算
-      { id: "allSecNoHours", name: "秒 (時除く)", isShow: true }, // 時間部分秒換算, 時除く
+      { id: "no", label: "No", field: "id", isShow: true },
+      { id: "yyyymmdd", label: "YYYY/MM/DD", field: "yyyymmdd", isShow: true },
+      { id: "yearOnly", label: "YYYY", field: "yearOnly", isShow: false }, // 年
+      { id: "monthOnly", label: "MM", field: "monthOnly", isShow: false }, // 月
+      { id: "dayOnly", label: "DD", field: "dayOnly", isShow: false }, // 日
+      { id: "hhmmss", label: "hh:mm:ss.ms", field: "hhmmss", isShow: true },
+      { id: "hoursOnly", label: "hh", field: "hoursOnly", isShow: false }, // 時
+      { id: "minutesOnly", label: "mm", field: "minutesOnly", isShow: false }, // 分
+      { id: "secondsOnly", label: "ss", field: "secondsOnly", isShow: false }, // 秒
+      { id: "miliSecondsOnly", label: "ms", field: "miliSecondsOnly", isShow: false }, // ミリ秒
+      { id: "allSec", label: "秒 / [s]", field: "allSec", isShow: true }, // 時間部分秒換算
+      { id: "allSecNoHours", label: "秒 (時除く) / [s]", field: "allSecNoHours", isShow: true }, // 時間部分秒換算, 時除く
     ]
 
     this.dates = []
@@ -59,48 +74,48 @@ export class RapTable {
    * 各行で表示するセルの配列を返す
    * @param index
    */
-  public getDateRow(index: number): Array<DataRowCellType> | null {
-    if (this.dates.length - 1 < index) return null
-    const date = this.dates[index]
+  public getDateRow(): Array<DataRowCellType> {
     const res: DataRowCellType[] = []
-    const showColumns = this.column.filter((c) => c.isShow)
 
-    showColumns.forEach((c) => {
-      switch (c.id) {
-        case "yyyymmdd":
-          res.push(`${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`)
-          break
-        case "yearOnly":
-          res.push(date.getFullYear())
-          break
-        case "monthOnly":
-          res.push(date.getMonth())
-          break
-        case "dayOnly":
-          res.push(date.getDay())
-          break
-        case "hhmmss":
-          res.push(`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`)
-          break
-        case "hoursOnly":
-          res.push(date.getHours())
-          break
-        case "minutesOnly":
-          res.push(date.getMinutes())
-          break
-        case "secondsOnly":
-          res.push(date.getSeconds())
-          break
-        case "allSec":
-          res.push(date.getHours() * 3600 + date.getMinutes() * 60 + date.getSeconds())
-          break
-        case "allSecNoHours":
-          res.push(date.getMinutes() * 60 + date.getSeconds())
-          break
-        default:
-          res.push(99999999)
-          break
-      }
+    this.dates.forEach((d, i) => {
+      res.push({ id: i + 1 })
+      this.column.filter((c) => c.isShow).forEach((c) => {
+        switch (c.id) {
+          case "yyyymmdd":
+            res[i].yyyymmdd = `${d.getFullYear()}/${("00"+d.getMonth()).slice(-2)}/${("00"+d.getDate()).slice(-2)}`
+            break
+          case "yearOnly":
+            res[i].yearOnly = d.getFullYear()
+            break
+          case "monthOnly":
+            res[i].monthOnly = d.getMonth()
+            break
+          case "dayOnly":
+            res[i].dayOnly = d.getDate()
+            break
+          case "hhmmss":
+            res[i].hhmmss = `${("00" + d.getHours()).slice(-2)}:${("00" + d.getMinutes()).slice(-2)}:${("00" + d.getSeconds()).slice(-2)}.${("000" + d.getMilliseconds()).slice(-3)}`
+            break
+          case "hoursOnly":
+            res[i].hoursOnly = d.getHours()
+            break
+          case "minutesOnly":
+            res[i].minutesOnly = d.getMinutes()
+            break
+          case "secondsOnly":
+            res[i].secondsOnly = d.getSeconds()
+            break
+          case "miliSecondsOnly":
+            res[i].miliSecondsOnly = d.getMilliseconds()
+            break
+          case "allSec":
+            res[i].allSec = d.getHours() * 3600 + d.getMinutes() * 60 + d.getSeconds() + d.getMilliseconds() * 0.001
+            break
+          case "allSecNoHours":
+            res[i].allSecNoHours = d.getMinutes() * 60 + d.getSeconds() + d.getMilliseconds() * 0.001
+            break
+        }
+      })
     })
 
     return res
@@ -114,5 +129,44 @@ export class RapTable {
   public deleteThisRow(index: number): void {
     if (this.dates.length - 1 < index) return
     this.dates.splice(index, 1)
+  }
+
+  /**
+   * dates をリセット
+   */
+  public resetDates(): void {
+    this.dates = []
+  }
+
+  /**
+   * sessionStorageに格納するための文字列に変換
+   * @returns
+   */
+  public getDatesString(): string {
+    const ret = this.dates.map((d) => {
+      return `${d.getFullYear()}/${d.getMonth()}/${d.getDate()}/${d.getHours()}/${d.getMinutes()}/${d.getSeconds()}/${d.getMilliseconds()}`
+    }).join(";")
+    return ret
+  }
+
+  /**
+   * sessionStorageに格納した文字列データからdatesに格納
+   * @param datesString
+   */
+  public setDatesString(datesString: string): void {
+    datesString.split(";").forEach((d) => {
+      const dateList = d.split("/")
+      if (dateList.length === 7) {
+        const date = new Date()
+        date.setFullYear(Number(dateList[0]))
+        date.setMonth(Number(dateList[1]))
+        date.setDate(Number(dateList[2]))
+        date.setHours(Number(dateList[3]))
+        date.setMinutes(Number(dateList[4]))
+        date.setSeconds(Number(dateList[5]))
+        date.setMilliseconds(Number(dateList[6]))
+        this.dates.push(date)
+      }
+    })
   }
 }

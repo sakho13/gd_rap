@@ -8,13 +8,10 @@
 
       <v-spacer />
 
-      <v-btn
-        text
-        @click="isAbout = !isAbout"
-      >
-        <span class="mr-2"> {{ isAbout ? "Top": "About"}} </span>
+      <!-- <v-btn text>
+        <span class="mr-2"> 本アプリについて </span>
         <v-icon> mdi-information-variant </v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-app-bar>
 
     <v-main>
@@ -30,7 +27,7 @@ export default Vue.extend({
   name: 'App',
 
   data: () => ({
-    isAbout: false
+    // isAbout: false
   }),
 
   computed: {
@@ -47,11 +44,11 @@ export default Vue.extend({
     // }
   },
 
-  watch: {
-    isAbout: function(_n, o) {
-      this.$router.push({name: o? "Top": "About"})
-    }
-  }
+  // watch: {
+  //   isAbout: function(_n, o) {
+  //     this.$router.push({name: o? "Top": "About"})
+  //   }
+  // }
 });
 </script>
 

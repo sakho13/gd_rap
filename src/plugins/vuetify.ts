@@ -9,10 +9,7 @@ export default new Vuetify({
       light: {
         primary: "#c8c8c8",
       },
-      dark: {
-        primary: "#9e9e9e",
-      }
     },
     dark: false
-  }
+  },
 });

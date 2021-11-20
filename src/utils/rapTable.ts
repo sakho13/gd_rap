@@ -32,16 +32,16 @@ export class RapTable {
     this.column = [
       { id: "no", label: "No", field: "id", isShow: true },
       { id: "yyyymmdd", label: "YYYY/MM/DD", field: "yyyymmdd", isShow: true },
-      { id: "yearOnly", label: "YYYY", field: "yearOnly", isShow: false }, // 年
-      { id: "monthOnly", label: "MM", field: "monthOnly", isShow: false }, // 月
-      { id: "dayOnly", label: "DD", field: "dayOnly", isShow: false }, // 日
+      { id: "yearOnly", label: "年", field: "yearOnly", isShow: false }, // 年
+      { id: "monthOnly", label: "月", field: "monthOnly", isShow: false }, // 月
+      { id: "dayOnly", label: "日", field: "dayOnly", isShow: false }, // 日
       { id: "hhmmss", label: "hh:mm:ss.ms", field: "hhmmss", isShow: true },
-      { id: "hoursOnly", label: "hh", field: "hoursOnly", isShow: false }, // 時
-      { id: "minutesOnly", label: "mm", field: "minutesOnly", isShow: false }, // 分
-      { id: "secondsOnly", label: "ss", field: "secondsOnly", isShow: false }, // 秒
-      { id: "miliSecondsOnly", label: "ms", field: "miliSecondsOnly", isShow: false }, // ミリ秒
-      { id: "allSec", label: "秒 / [s]", field: "allSec", isShow: true }, // 時間部分秒換算
-      { id: "allSecNoHours", label: "秒 (時除く) / [s]", field: "allSecNoHours", isShow: true }, // 時間部分秒換算, 時除く
+      { id: "hoursOnly", label: "時", field: "hoursOnly", isShow: false }, // 時
+      { id: "minutesOnly", label: "分", field: "minutesOnly", isShow: false }, // 分
+      { id: "secondsOnly", label: "秒 / [s]", field: "secondsOnly", isShow: false }, // 秒
+      { id: "miliSecondsOnly", label: "ミリ秒 / [s]", field: "miliSecondsOnly", isShow: false }, // ミリ秒
+      { id: "allSec", label: "秒換算 / [s]", field: "allSec", isShow: true }, // 時間部分秒換算
+      { id: "allSecNoHours", label: "秒換算 (時除く) / [s]", field: "allSecNoHours", isShow: true }, // 時間部分秒換算, 時除く
     ]
 
     this.dates = []
@@ -82,13 +82,13 @@ export class RapTable {
       this.column.filter((c) => c.isShow).forEach((c) => {
         switch (c.id) {
           case "yyyymmdd":
-            res[i].yyyymmdd = `${d.getFullYear()}/${("00"+d.getMonth()).slice(-2)}/${("00"+d.getDate()).slice(-2)}`
+            res[i].yyyymmdd = `${d.getFullYear()}/${("00"+(d.getMonth()+1)).slice(-2)}/${("00"+d.getDate()).slice(-2)}`
             break
           case "yearOnly":
             res[i].yearOnly = d.getFullYear()
             break
           case "monthOnly":
-            res[i].monthOnly = d.getMonth()
+            res[i].monthOnly = d.getMonth()+1
             break
           case "dayOnly":
             res[i].dayOnly = d.getDate()

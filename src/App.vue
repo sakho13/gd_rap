@@ -1,17 +1,12 @@
 <template>
   <v-app style="background-color: #f5f5f5;">
     <v-app-bar
-      app color="primary"
+      app color="teal lighten-4"
     >
 
-      <v-app-bar-title> GD-Rap </v-app-bar-title>
+      <v-app-bar-title class="mp htitle"> GD-Rap </v-app-bar-title>
 
       <v-spacer />
-
-      <!-- <v-btn text>
-        <span class="mr-2"> 本アプリについて </span>
-        <v-icon> mdi-information-variant </v-icon>
-      </v-btn> -->
     </v-app-bar>
 
     <v-main>
@@ -29,28 +24,20 @@ export default Vue.extend({
   data: () => ({
     // isAbout: false
   }),
-
-  computed: {
-    // appStyleObj: function() {
-    //   if (this.$vuetify.theme.dark) {
-    //     return {
-    //       'background-color': '#d4d4d4'
-    //     }
-    //   } else {
-    //     return {
-    //       'background-color': '#ffffff'
-    //     }
-    //   }
-    // }
-  },
-
-  // watch: {
-  //   isAbout: function(_n, o) {
-  //     this.$router.push({name: o? "Top": "About"})
-  //   }
-  // }
 });
 </script>
 
+<style>
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1&display=swap');
+
+.mp {
+  font-family: 'M PLUS 1', sans-serif;
+}
+
+</style>
+
 <style scoped>
+.htitle {
+  font-weight: 800;
+}
 </style>

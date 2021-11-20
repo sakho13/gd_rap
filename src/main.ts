@@ -3,13 +3,15 @@ import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify'
 import { initializeApp } from "firebase/app";
-// import { getAnalytics } from "firebase/analytics";
+import { getAnalytics, logEvent } from "firebase/analytics";
 import { firebaseConfig } from './firebaseConfig';
 
 Vue.config.productionTip = false
 
 const app = initializeApp(firebaseConfig);
-// const analytics = getAnalytics(app);
+const analytics = getAnalytics(app);
+export const LogEvent = logEvent
+export const Analytics = analytics
 
 new Vue({
   router,

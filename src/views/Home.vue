@@ -141,6 +141,7 @@ import { VueGoodTable } from "vue-good-table"
 
 import { RapTable } from '@/utils/rapTable'
 import AboutCard from '@/components/AboutCard.vue'
+import { Analytics, LogEvent } from '@/main'
 
 export default Vue.extend({
   name: 'Home',
@@ -196,6 +197,9 @@ export default Vue.extend({
       this.storeBefore = beforeStoreData === "false" ? false: true
     }
     this.setNewDate()
+    LogEvent(Analytics, "join", {
+      "join_date": this.date.toLocaleString()
+    })
     setInterval(() => this.setNewDate(), 10)
     document.addEventListener("keydown", this.onKeyDown)
   },

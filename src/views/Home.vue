@@ -4,9 +4,9 @@
       <v-col cols="0" md="2"></v-col>
       <v-col cols="12" md="8">
         <v-row>
+          <!-- 設定とかのアイコン -->
           <v-spacer />
           <v-col class="text-right">
-            <!-- オプション ダイアログ -->
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -31,8 +31,11 @@
             </v-tooltip>
           </v-col>
         </v-row>
-        <h1 class="mp"> ラップ記録 </h1>
+
+
+        <h1 class="mp"> ラップ記録 </h1> <!-- 現在時間諸々を表示するとこ -->
         <v-container>
+          <p> Enterキー入力で記録できます。 </p>
           <v-card elevation="1" class="clock-card">
             <v-container>
               <v-container class="mp">
@@ -64,7 +67,7 @@
       <v-col cols="0" md="2"></v-col>
     </v-row>
 
-    <v-container>
+    <v-container> <!-- 記録データの表 -->
       <h1 class="mp"> 記録データ </h1>
       <v-container>
         <v-row>

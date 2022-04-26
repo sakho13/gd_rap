@@ -72,7 +72,8 @@
       <v-container>
         <v-row>
           <v-col cols="12" md="8"> <p class="mp"> 下の表をコピーしてExcelやスプレッドシートに貼り付けてください。 </p> </v-col>
-          <v-col cols="12" md="4" class="text-right">
+          <v-col cols="12" md="4" class="text-right justify-space-around d-flex">
+            <v-btn @click="getCSV()"> ダウンロード </v-btn>
             <v-btn @click="reset" class="mp">
               リセット
               <v-icon> mdi-refresh-circle </v-icon>
@@ -186,6 +187,15 @@ export default Vue.extend({
       if (event.key === "Enter") {
         this.addNowDate()
       }
+    },
+
+    getCSV() {
+      const csv = this.dateTable.getCsvStrData()
+      const blob = new Blob([csv], { type: "text/csv" })
+      const aTag = document.createElement("a")
+      aTag.href = window.URL.createObjectURL(blob)
+      aTag.download = `${this.date.getFullYear()}-${this.date.getMonth() + 1}-${this.date.getDate()}-${this.date.getHours()}-${this.date.getMinutes()}-${this.date.getSeconds()}.csv`
+      aTag.click()
     }
   },
 

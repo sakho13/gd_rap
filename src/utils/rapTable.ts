@@ -122,6 +122,27 @@ export class RapTable {
   }
 
   /**
+   * datesをCSV形式文字列に変形
+   * @returns
+   */
+  public getCsvStrData(): string {
+    const data = this.getDateRow()
+
+    const dataStr = data.map((d) => {
+      const lineStr = Object.entries(d)
+        .map(([, value]) => value).join(",")
+      return lineStr + "\n"
+    }).join("")
+
+    const columnStr = this.column
+      .filter((c) => c.isShow)
+      .map((c) => "\ufeff" + c.label)
+      .join(",") + "\n"
+
+    return columnStr + dataStr
+  }
+
+  /**
    * dates から指定indexの値を削除
    * @param index
    * @returns

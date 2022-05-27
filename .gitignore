@@ -4,6 +4,7 @@ node_modules
 /public
 firebaseConfig.ts
 .firebase
+./package-lock.json
 
 # local env files
 .env.local
